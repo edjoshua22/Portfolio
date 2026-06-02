@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import data from "@/lib/data";
-import SectionWrapper from "./SectionWrapper";
 
 const terminalLines = [
   { prompt: "$ whoami", response: `> ${data.name} — ${data.bio.split(".")[0]}.` },
@@ -13,16 +13,150 @@ const terminalLines = [
   { prompt: "$ status", response: `> ${data.status}` },
 ];
 
-const stats = [
-  { label: "YEARS_EXP", value: data.yearsExp, suffix: "+" },
-  { label: "PROJECTS_BUILT", value: data.projectsBuilt, suffix: "+" },
-  { label: "GITHUB_REPOS", value: data.githubRepos, suffix: "+" },
-];
 
 export default function About() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <SectionWrapper id="about">
-      <div className="max-w-6xl mx-auto px-6">
+    <section
+      id="about"
+      className="relative w-full min-h-screen overflow-hidden flex items-center"
+    >
+      {/* ── Cyberpunk ambient gradient backdrop ── */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 70% at 65% 50%, rgba(0,255,240,0.06) 0%, rgba(0,80,80,0.04) 40%, transparent 70%)",
+        }}
+      />
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 80% at 75% 45%, rgba(255,0,255,0.04) 0%, transparent 60%)",
+        }}
+      />
+
+      {/* ── Side decoration line ── */}
+      <div className="absolute top-0 left-6 md:left-12 w-[1px] h-full bg-gradient-to-b from-transparent via-cyber-cyan/10 to-transparent" />
+
+      {/* ── Avatar — large, right-aligned, cinematic ── */}
+      <motion.div
+        initial={{ opacity: 0, scale: 1.05 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="absolute right-0 top-0 w-[55%] h-full hidden md:block"
+        style={{ zIndex: 1 }}
+      >
+        <div className="absolute inset-0 overflow-hidden">
+          {/* Dark base layer to kill any white bleed */}
+          <div className="absolute inset-0 bg-black" />
+          <img
+            src="/avatar.jpg"
+            alt={data.name}
+            className="w-full h-full object-cover object-top"
+            style={{
+              filter: "saturate(0.5) contrast(1.2) brightness(0.6)",
+              maskImage:
+                "linear-gradient(to left, black 10%, transparent 85%)",
+              WebkitMaskImage:
+                "linear-gradient(to left, black 10%, transparent 85%)",
+              transform: `translateY(${scrollY * 0.03}px)`,
+            }}
+          />
+          {/* Cyan tint overlay */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(0,255,240,0.08) 0%, rgba(255,0,255,0.05) 50%, rgba(0,0,0,0.5) 100%)",
+              mixBlendMode: "color",
+            }}
+          />
+          {/* Top fade to black */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, black 0%, transparent 30%)",
+            }}
+          />
+          {/* Bottom fade to black */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, black 0%, transparent 40%)",
+            }}
+          />
+          {/* Left fade to black */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to right, black 0%, transparent 55%)",
+            }}
+          />
+          {/* Right fade to black */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to left, black 0%, transparent 25%)",
+            }}
+          />
+
+          {/* Scanline overlay */}
+          <div
+            className="absolute inset-0 pointer-events-none opacity-15"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,240,0.04) 2px, rgba(0,255,240,0.04) 4px)",
+            }}
+          />
+          {/* Corner accents on avatar */}
+          <div className="absolute top-8 right-8 w-12 h-12 border-t border-r border-cyber-cyan/30 z-10" />
+          <div className="absolute bottom-8 right-8 w-12 h-12 border-b border-r border-cyber-cyan/30 z-10" />
+        </div>
+      </motion.div>
+
+      {/* ── Mobile avatar (background for small screens) ── */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1 }}
+        className="absolute inset-0 md:hidden pointer-events-none"
+        style={{ zIndex: 0 }}
+      >
+        <img
+          src="/avatar.jpg"
+          alt={data.name}
+          className="w-full h-full object-cover object-top"
+          style={{
+            filter: "saturate(0.3) contrast(1.1) brightness(0.25)",
+            opacity: 0.4,
+          }}
+        />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to top, black 15%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.7) 100%)",
+          }}
+        />
+      </motion.div>
+
+      {/* ── Content ── */}
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-6 md:px-12 py-24 md:py-32">
         {/* Label */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -44,7 +178,7 @@ export default function About() {
           System Profile
         </motion.h2>
 
-        {/* Split layout */}
+        {/* Main grid */}
         <div className="grid md:grid-cols-2 gap-12 mb-16">
           {/* Left: CLI terminal */}
           <motion.div
@@ -89,82 +223,25 @@ export default function About() {
             </div>
           </motion.div>
 
-          {/* Right: Avatar */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex items-center justify-center"
-          >
-            <div className="relative">
-              {/* Outer glow frame */}
-              <div className="absolute -inset-3 border border-cyber-cyan/30 shadow-neon-cyan" />
-              <div className="absolute -inset-6 border border-cyber-magenta/15" />
-
-              {/* Avatar container */}
-              <div className="w-64 h-64 md:w-72 md:h-72 border border-cyber-cyan/50 bg-black/80 relative overflow-hidden">
-                {/* Actual photo */}
-                <img
-                  src="/avatar.jpg"
-                  alt={data.name}
-                  className="w-full h-full object-cover object-top"
-                  style={{
-                    filter: "saturate(0.7) contrast(1.1) brightness(0.9)",
-                  }}
-                />
-
-                {/* Scanline overlay on avatar */}
-                <div
-                  className="absolute inset-0 pointer-events-none opacity-20 z-10"
-                  style={{
-                    backgroundImage:
-                      "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,240,0.06) 2px, rgba(0,255,240,0.06) 4px)",
-                  }}
-                />
-
-                {/* Subtle cyan tint overlay */}
-                <div className="absolute inset-0 bg-cyber-cyan/5 mix-blend-overlay pointer-events-none z-10" />
-
-                {/* Corner accents */}
-                <div className="absolute top-0 left-0 w-5 h-5 border-t-2 border-l-2 border-cyber-cyan/70 z-20" />
-                <div className="absolute top-0 right-0 w-5 h-5 border-t-2 border-r-2 border-cyber-cyan/70 z-20" />
-                <div className="absolute bottom-0 left-0 w-5 h-5 border-b-2 border-l-2 border-cyber-cyan/70 z-20" />
-                <div className="absolute bottom-0 right-0 w-5 h-5 border-b-2 border-r-2 border-cyber-cyan/70 z-20" />
-
-                {/* Bottom label */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent py-3 px-3 z-20">
-                  <span className="font-mono text-[9px] tracking-[0.25em] text-cyber-cyan/60 uppercase">
-                    &gt; identity.verified
-                  </span>
-                </div>
-              </div>
-            </div>
-          </motion.div>
+          {/* Right: empty on desktop (avatar is the bg), avatar card on mobile is the bg */}
+          <div className="hidden md:block" />
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {stats.map((stat, i) => (
-            <motion.div
-              key={stat.label}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 + i * 0.1 }}
-              className="cyber-card p-6 text-center"
-            >
-              <div className="font-heading text-4xl font-bold text-cyber-cyan text-glow-cyan mb-2">
-                {stat.value}
-                <span className="text-cyber-magenta">{stat.suffix}</span>
-              </div>
-              <div className="font-mono text-xs tracking-[0.2em] text-gray-500 uppercase">
-                {stat.label}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+
       </div>
-    </SectionWrapper>
+
+      {/* ── Decorative corner marks ── */}
+      <div className="absolute top-6 left-6 w-6 h-6 pointer-events-none hidden md:block border-t border-l border-cyber-cyan/20" />
+      <div className="absolute bottom-6 right-6 w-6 h-6 pointer-events-none hidden md:block border-b border-r border-cyber-cyan/20" />
+
+      {/* ── Bottom gradient line ── */}
+      <div
+        className="absolute bottom-0 left-0 right-0 h-[1px]"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent, rgba(0,255,240,0.2), transparent)",
+        }}
+      />
+    </section>
   );
 }

@@ -1,1 +1,5 @@
 node_modules
+.next
+.expo
+*.pack.gz
+*.pack.gz.old

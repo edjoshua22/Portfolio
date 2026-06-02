@@ -149,6 +149,17 @@ const data: PersonalData = {
       liveUrl: "#",
       featured: true,
     },
+    {
+      id: "proj-005",
+      number: "005",
+      title: "TO_DO_APP",
+      description:
+        "A simple Flutter to do app with laravel as backend and mysql as database.",
+      techStack: ["Flutter", "Dart", "Laravel", "MySQL"],
+      githubUrl: "https://github.com/edjoshua22/To-do-app-flutter",
+      liveUrl: "https://edjoshua22.github.io/To-do-app-flutter/",
+      featured: true,
+    }
   ],
 
   // Social links
