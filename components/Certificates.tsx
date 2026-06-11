@@ -13,15 +13,7 @@ const CERTS: Cert[] = [
   { id:"c4", title:"ReactJS for Beginners", issuer:"Simplilearn SkillUP", date:"2nd June 2026", certCode:"10297525", description:"Core React concepts including components, hooks, state management, props, and building interactive SPAs with modern best practices.", pdfUrl:"https://certificates.simplicdn.net/share/10297525_10589620_1780426380460.pdf", theme:"simplilearn", accent:"#61dafb", glow:"rgba(97,218,251,0.5)" },
 ];
 
-const CSS = `
-@keyframes shimmer{0%{left:-60%}100%{left:130%}}
-@keyframes scanline{0%{top:-4px}100%{top:102%}}
-@keyframes bloomPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:.8;transform:scale(1.06)}}
-@keyframes floatUp{0%{transform:translateY(0) scale(1);opacity:.8}100%{transform:translateY(-130px) scale(.2);opacity:0}}
-@keyframes glitch{0%,88%,100%{clip-path:none;transform:none}89%{clip-path:polygon(0 20%,100% 20%,100% 40%,0 40%);transform:translateX(-3px)}91%{clip-path:polygon(0 60%,100% 60%,100% 80%,0 80%);transform:translateX(3px)}93%{clip-path:none;transform:none}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-@keyframes tabPulse{0%,100%{box-shadow:none}50%{box-shadow:var(--tab-glow)}}
-`;
+
 
 function FccCover({ title, date, hours }: { title:string; date:string; hours?:string }) {
   return (
@@ -114,7 +106,6 @@ export default function Certificates() {
 
   return (
     <SectionWrapper id="certificates">
-      <style dangerouslySetInnerHTML={{__html:CSS}}/>
       <div className="max-w-5xl mx-auto px-6">
 
         <motion.div initial={{opacity:0,x:-20}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{duration:.5}} className="mb-2">

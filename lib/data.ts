@@ -138,17 +138,7 @@ const data: PersonalData = {
       liveUrl: "https://edjoshua22.github.io/Cacao-track/",
       featured: true,
     },
-    {
-      id: "proj-004",
-      number: "004",
-      title: "GRID_FORGE",
-      description:
-        "A responsive e-commerce platform with payment integration, inventory management, and an admin analytics panel.",
-      techStack: ["Next.js", "Stripe", "Prisma", "Tailwind CSS"],
-      githubUrl: "https://github.com/edjoshua22",
-      liveUrl: "#",
-      featured: true,
-    },
+
     {
       id: "proj-005",
       number: "005",
